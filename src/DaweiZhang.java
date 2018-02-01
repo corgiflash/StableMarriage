@@ -37,7 +37,7 @@ public class DaweiZhang {
     }
 
     public static void main(String args[]) {
-        DaweiZhang dz = new DaweiZhang("input1.txt");//change when you using JGRASP input1.txt
+        DaweiZhang dz = new DaweiZhang("src/input1.txt");//change when you using JGRASP input1.txt
         //stableM();
         //Using src/input.txt for here.
     }
@@ -58,16 +58,16 @@ public class DaweiZhang {
             while (inFile.hasNext()) {
                 // initial the rank of men and women in arrays
                 if (count < size * size) {
-                    men.get(count / size).rank[inFile.nextInt()] = count % size;
+                    men.get(count / size).rank[inFile.nextInt()-1] = count % size;
                 } else {
-                    women.get((count - size * size) / size).rank[inFile.nextInt()] = count % size;
+                    women.get((count - size * size) / size).rank[inFile.nextInt()-1] = count % size;
                 }
                 count++;
             }
             // test the input.txt
-//       for (int e:men.get(1).rank) {
-//          System.out.println(e);
-//       }
+       for (int e:men.get(1).rank) {
+          System.out.println(e);
+       }
 
         }
 
