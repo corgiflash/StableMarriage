@@ -1,6 +1,7 @@
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 
@@ -27,18 +28,23 @@ class Woman{
 public class DaweiZhang {
     ArrayList<Man> men = new ArrayList<>();
     ArrayList<Woman> women = new ArrayList<>();
-
+    Map<Woman, Man> oneStable;
     public DaweiZhang(String fileName) {
         try {
             readfile(fileName);
         } catch (Exception e) {
             e.printStackTrace();
         }
+         oneStable = stableM();
+
+        for (Map.Entry<Woman,Man> entry : oneStable.entrySet())
+            System.out.println("Key = " + entry.getValue() +
+                    ", Value = " + entry.getValue());
     }
 
     public static void main(String args[]) {
         DaweiZhang dz = new DaweiZhang("src/input1.txt");//change when you using JGRASP input1.txt
-        //stableM();
+
         //Using src/input.txt for here.
     }
 
@@ -65,15 +71,15 @@ public class DaweiZhang {
                 count++;
             }
             // test the input.txt
-       for (int e:men.get(1).rank) {
+       for (int e:men.get(0).rank) {
           System.out.println(e);
        }
 
         }
 
-        public HashMap stableM() {
+        public Map stableM() {
             int matched = 0;
-            HashMap<Woman, Man> chioce = new HashMap<>();
+            Map<Woman, Man> chioce = new HashMap<>();
             while (matched < men.size()) {
                 int manIndex = matched;
                 for (manIndex = 0; manIndex < men.size(); manIndex++) {
