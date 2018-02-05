@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4114f630-9680-4bc3-b9ee-72ea6201d6e1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/project1/DaweiZhang.class" afterPath="$PROJECT_DIR$/out/production/project1/DaweiZhang.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/project1/Man.class" afterPath="$PROJECT_DIR$/out/production/project1/Man.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/project1/Woman.class" afterPath="$PROJECT_DIR$/out/production/project1/Woman.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/project1/input1.txt" afterPath="$PROJECT_DIR$/out/production/project1/input1.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/DaweiZhang.java" afterPath="$PROJECT_DIR$/src/DaweiZhang.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/input1.txt" afterPath="$PROJECT_DIR$/src/input1.txt" />
-    </list>
+    <list default="true" id="4114f630-9680-4bc3-b9ee-72ea6201d6e1" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -113,8 +105,8 @@
       <file leaf-file-name="BinaryTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$USER_HOME$/Dropbox/282/project 1 submissions/Unscorable/BinaryTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="14" column="29" lean-forward="true" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
+            <state relative-caret-position="396">
+              <caret line="18" column="30" lean-forward="true" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -288,12 +280,12 @@
       <workItem from="1517459907862" duration="3052000" />
       <workItem from="1517528708623" duration="1813000" />
       <workItem from="1517706797227" duration="717000" />
-      <workItem from="1517771676677" duration="8361000" />
+      <workItem from="1517771676677" duration="8961000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47104000" />
+    <option name="totallyTimeSpent" value="47704000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
@@ -679,8 +671,8 @@
     </entry>
     <entry file="file://$USER_HOME$/Dropbox/282/project 1 submissions/Unscorable/BinaryTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="14" column="29" lean-forward="true" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
+        <state relative-caret-position="396">
+          <caret line="18" column="30" lean-forward="true" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
           <folding />
         </state>
       </provider>
