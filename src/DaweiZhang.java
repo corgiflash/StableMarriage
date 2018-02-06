@@ -36,7 +36,10 @@ class Woman{
 public class DaweiZhang {
     ArrayList<Man> men = new ArrayList<>();
     ArrayList<Woman> women = new ArrayList<>();
+    ArrayList<Man> men1 = new ArrayList<>();
+    ArrayList<Woman> women1= new ArrayList<>();
     Map<Woman, Man> oneStable;
+    Map<Woman, Man> secStable;
     public DaweiZhang(String fileName) {
         try {
             readfile(fileName);
@@ -44,26 +47,8 @@ public class DaweiZhang {
             e.printStackTrace();
         }
         oneStable = stableM();
-
-        for (boolean e:women.get(0).reject) {
-            System.out.print(e+",");
-        }
-        System.out.println();
-        for (boolean e:women.get(1).reject){
-            System.out.print(e+",");
-        }
-        System.out.println();
-        for (boolean e:women.get(2).reject) {
-            System.out.print(e+",");
-        }
-        System.out.println();
-        for (boolean e:women.get(3).reject) {
-            System.out.print(e+",");
-        }
-        System.out.println();
-        for (Map.Entry<Woman,Man> entry : oneStable.entrySet())
-            System.out.println("Man = " + entry.getValue().index +
-                    ", Woman = " + entry.getKey().index);
+        secStable = stableW();
+        p();
     }
 
     public static void main(String args[]) {
@@ -80,14 +65,18 @@ public class DaweiZhang {
         women = new ArrayList<>();
         for (int i = 0; i < size * 2; i++) {
             // initial the men and women in arrays
-            if (i < size)
-                men.add(new Man(size, i%size+1));
-            else
-                women.add(new Woman(size,i%size+1));
+            if (i < size){
+                men.add(new Man(size, i % size + 1));
+                men1.add(new Man(size, i % size + 1));
+            }
+            else{
+                women.add(new Woman(size, i % size + 1));
+                women1.add(new Woman(size, i % size + 1));
+            }
         }
         /**********************************************
          /**men propose*********************************
-         *
+         */
         inFile.nextLine();
         while (inFile.hasNextLine()) {
             String line = inFile.nextLine();
@@ -96,12 +85,14 @@ public class DaweiZhang {
             {
                 for (int index = 0; index < size; index ++) {
                     men.get(lineNo).rank[index] = Integer.parseInt(components[index])-1;
+                    women1.get(lineNo).rank[index] = Integer.parseInt(components[index])-1;
                 }
             }
             else
             {
                 for (int index = 0; index < size; index ++) {
                     women.get(lineNo - size).rank[index] = Integer.parseInt(components[index])-1;
+                    men1.get(lineNo - size).rank[index] = Integer.parseInt(components[index])-1;
                 }
             }
             lineNo++;
@@ -126,7 +117,7 @@ public class DaweiZhang {
          */
 
         // women propose
-
+        /*
         inFile.nextLine();
         while (inFile.hasNextLine()) {
             String line = inFile.nextLine();
@@ -237,6 +228,84 @@ public class DaweiZhang {
                 manIndex++;
         }
         return chioce;
+    }
+    public Map stableW() {
+        int manIndex  = 0;
+        Map<Woman, Man> chioce = new HashMap<>();
+        while (chioce.size()  <= men1.size()) {
+            for (int e : men1.get(manIndex).rank) {
+                // if the man get reject once, do not need to check
+                if (!men1.get(manIndex).free) {
+                    break;
+                }
+                if(!women1.get(e).reject[manIndex]) {
+                    if (women1.get(e).free) {
+                        chioce.put(women1.get(e), men1.get(manIndex));
+                        women1.get(e).free = false;
+                        men1.get(manIndex).free = false;
+
+                        break;
+                    } else if (women1.get(e).rank[manIndex] < women1.get(e).rank[men1.indexOf(chioce.get(women1.get(e)))]) {
+                        women1.get(e).reject[men1.indexOf(chioce.get(women1.get(e)))] = true;
+                        men1.get(men1.indexOf(chioce.get(women1.get(e)))).free = true;
+                        chioce.remove(women1.get(e));
+                        chioce.put(women1.get(e), men1.get(manIndex));
+                        men1.get(manIndex).free = false;
+                        break;
+                    } else {
+                        women1.get(e).reject[manIndex] = true;
+                    }
+                }
+            }
+            if(chioce.size() == men1.size())
+                break;
+            if(manIndex == men1.size() - 1 )
+                manIndex=0;
+            else
+                manIndex++;
+        }
+        return chioce;
+    }
+    public void p(){
+//        reject
+//        for (boolean e:women.get(0).reject) {
+//            System.out.print(e+",");
+//        }
+//        System.out.println();
+//        for (boolean e:women.get(1).reject){
+//            System.out.print(e+",");
+//        }
+//        System.out.println();
+//        for (boolean e:women.get(2).reject) {
+//            System.out.print(e+",");
+//        }
+//        System.out.println();
+//        for (boolean e:women.get(3).reject) {
+//            System.out.print(e+",");
+//        }
+        // print list
+        for (int e:men1.get(0).rank) {
+            System.out.print(e+",");
+        }
+        System.out.println();
+        for (int e:men1.get(1).rank) {
+            System.out.print(e+",");
+        }
+        System.out.println();
+        for (int e:men1.get(2).rank) {
+            System.out.print(e+",");
+        }
+        System.out.println();
+        for (int e:men1.get(3).rank) {
+            System.out.print(e+",");
+        }
+        System.out.println();
+        for (Map.Entry<Woman,Man> entry : oneStable.entrySet())
+            System.out.println("Man = " + entry.getValue().index +
+                    ", Woman = " + entry.getKey().index);
+        for (Map.Entry<Woman,Man> entry : secStable.entrySet())
+            System.out.println("Man = " + entry.getKey().index +
+                    ", Woman = " + entry.getValue().index);
     }
 }
 
