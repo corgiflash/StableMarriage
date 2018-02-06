@@ -47,7 +47,7 @@ public class DaweiZhang {
             e.printStackTrace();
         }
         oneStable = stableM();
-        secStable = stableW();
+        //secStable = stableW();
         p();
     }
 
@@ -201,22 +201,25 @@ public class DaweiZhang {
                 if (!men.get(manIndex).free) {
                     break;
                 }
-                if(!women.get(e).reject[manIndex]) {
+                if (!women.get(e).reject[manIndex]) {
                     if (women.get(e).free) {
                         chioce.put(women.get(e), men.get(manIndex));
                         women.get(e).free = false;
                         men.get(manIndex).free = false;
-
                         break;
-                    } else if (women.get(e).rank[manIndex] < women.get(e).rank[men.indexOf(chioce.get(women.get(e)))]) {
-                        women.get(e).reject[men.indexOf(chioce.get(women.get(e)))] = true;
-                        men.get(men.indexOf(chioce.get(women.get(e)))).free = true;
-                        chioce.remove(women.get(e));
-                        chioce.put(women.get(e), men.get(manIndex));
-                        men.get(manIndex).free = false;
-                        break;
-                    } else {
-                        women.get(e).reject[manIndex] = true;
+                    } else { //if (women.get(e).rank[manIndex] < women.get(e).rank[men.indexOf(chioce.get(women.get(e)))]) {
+                        for (int j = 0; j < women.get(e).size; j++) {
+                            if (women.get(e).rank[j]==e) {
+                                women.get(e).reject[men.indexOf(chioce.get(women.get(e)))] = true;
+                                men.get(men.indexOf(chioce.get(women.get(e)))).free = true;
+                                chioce.remove(women.get(e));
+                                chioce.put(women.get(e), men.get(manIndex));
+                                men.get(manIndex).free = false;
+                                break;
+                            } else if(women.get(e).rank[j]== {// 这个没弄完，第二个case的比较
+                                women.get(e).reject[manIndex] = true;
+                            }
+                        }
                     }
                 }
             }
@@ -229,43 +232,43 @@ public class DaweiZhang {
         }
         return chioce;
     }
-    public Map stableW() {
-        int manIndex  = 0;
-        Map<Woman, Man> chioce = new HashMap<>();
-        while (chioce.size()  <= men1.size()) {
-            for (int e : men1.get(manIndex).rank) {
-                // if the man get reject once, do not need to check
-                if (!men1.get(manIndex).free) {
-                    break;
-                }
-                if(!women1.get(e).reject[manIndex]) {
-                    if (women1.get(e).free) {
-                        chioce.put(women1.get(e), men1.get(manIndex));
-                        women1.get(e).free = false;
-                        men1.get(manIndex).free = false;
-
-                        break;
-                    } else if (women1.get(e).rank[manIndex] < women1.get(e).rank[men1.indexOf(chioce.get(women1.get(e)))]) {
-                        women1.get(e).reject[men1.indexOf(chioce.get(women1.get(e)))] = true;
-                        men1.get(men1.indexOf(chioce.get(women1.get(e)))).free = true;
-                        chioce.remove(women1.get(e));
-                        chioce.put(women1.get(e), men1.get(manIndex));
-                        men1.get(manIndex).free = false;
-                        break;
-                    } else {
-                        women1.get(e).reject[manIndex] = true;
-                    }
-                }
-            }
-            if(chioce.size() == men1.size())
-                break;
-            if(manIndex == men1.size() - 1 )
-                manIndex=0;
-            else
-                manIndex++;
-        }
-        return chioce;
-    }
+//    public Map stableW() {
+//        int manIndex  = 0;
+//        Map<Woman, Man> chioce = new HashMap<>();
+//        while (chioce.size()  <= men1.size()) {
+//            for (int e : men1.get(manIndex).rank) {
+//                // if the man get reject once, do not need to check
+//                if (!men1.get(manIndex).free) {
+//                    break;
+//                }
+//                if(!women1.get(e).reject[manIndex]) {
+//                    if (women1.get(e).free) {
+//                        chioce.put(women1.get(e), men1.get(manIndex));
+//                        women1.get(e).free = false;
+//                        men1.get(manIndex).free = false;
+//
+//                        break;
+//                    } else if (women1.get(e).rank[manIndex] < women1.get(e).rank[men1.indexOf(chioce.get(women1.get(e)))]) {
+//                        women1.get(e).reject[men1.indexOf(chioce.get(women1.get(e)))] = true;
+//                        men1.get(men1.indexOf(chioce.get(women1.get(e)))).free = true;
+//                        chioce.remove(women1.get(e));
+//                        chioce.put(women1.get(e), men1.get(manIndex));
+//                        men1.get(manIndex).free = false;
+//                        break;
+//                    } else {
+//                        women1.get(e).reject[manIndex] = true;
+//                    }
+//                }
+//            }
+//            if(chioce.size() == men1.size())
+//                break;
+//            if(manIndex == men1.size() - 1 )
+//                manIndex=0;
+//            else
+//                manIndex++;
+//        }
+//        return chioce;
+//    }
     public void p(){
 //        reject
 //        for (boolean e:women.get(0).reject) {
