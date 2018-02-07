@@ -66,12 +66,12 @@ public class DaweiZhang {
         for (int i = 0; i < size * 2; i++) {
             // initial the men and women in arrays
             if (i < size){
-                men.add(new Man(size, i % size + 1));
-                men1.add(new Man(size, i % size + 1));
+                men.add(new Man(size, i % size ));
+                men1.add(new Man(size, i % size ));
             }
             else{
-                women.add(new Woman(size, i % size + 1));
-                women1.add(new Woman(size, i % size + 1));
+                women.add(new Woman(size, i % size ));
+                women1.add(new Woman(size, i % size ));
             }
         }
         /**********************************************
@@ -84,14 +84,14 @@ public class DaweiZhang {
             if(lineNo < size)
             {
                 for (int index = 0; index < size; index ++) {
-                    men.get(lineNo).rank[Integer.parseInt(components[index])-1] = index ;
+                    men.get(lineNo).rank[ index ] =Integer.parseInt(components[index])-1;
                     women1.get(lineNo).rank[index] = Integer.parseInt(components[index])-1;
                 }
             }
             else
             {
                 for (int index = 0; index < size; index ++) {
-                    women.get(lineNo - size).rank[Integer.parseInt(components[index])-1] = index;
+                    women.get(lineNo - size).rank[index] = Integer.parseInt(components[index])-1;
                     men1.get(lineNo - size).rank[index] = Integer.parseInt(components[index])-1;
                 }
             }
@@ -160,31 +160,31 @@ public class DaweiZhang {
 
     public Map stableM() {
         int manIndex  = 0;
-
         Map<Woman, Man> chioce = new HashMap<>();
-
         while (chioce.size()  <= men.size()) {
+            int manRejectIndex = 0;
             for (int e : men.get(manIndex).rank) {
                 // if the man get reject once, do not need to check
                 if (!men.get(manIndex).free) {
                     break;
                 }
-                if (!women.get(e).reject[manIndex]) {
+                if (!men.get(manIndex).reject[manRejectIndex]) {
                     if (women.get(e).free) {
                         chioce.put(women.get(e), men.get(manIndex));
                         women.get(e).free = false;
                         men.get(manIndex).free = false;
                         break;
-                    } else if (women.get(e).rank[manIndex] < women.get(e).rank[men.indexOf(chioce.get(women.get(e)))]) {
-                                women.get(e).reject[men.indexOf(chioce.get(women.get(e)))] = true;
-                                men.get(men.indexOf(chioce.get(women.get(e)))).free = true;
-                                chioce.remove(women.get(e));
-                                chioce.put(women.get(e), men.get(manIndex));
-                                men.get(manIndex).free = false;
-                                break;
+                    } else if (findIndexFromRank(manIndex,women.get(e).rank) < findIndexFromRank(chioce.get(women.get(e)).index,women.get(e).rank)) {
+                        chioce.get(women.get(e)).reject[findIndexFromRank(women.get(e).index,men.get(e).rank)] = true;
+                        men.get(chioce.get(women.get(e)).index).free = true;
+                        chioce.remove(women.get(e));
+                        chioce.put(women.get(e), men.get(manIndex));
+                        men.get(manIndex).free = false;
+                        break;
                     } else
-                        women.get(e).reject[manIndex] = true;
+                        women.get(e).reject[manRejectIndex] = true;
                 }
+                manRejectIndex++;
             }
             if(chioce.size() == men.size())
                 break;
@@ -194,6 +194,16 @@ public class DaweiZhang {
                 manIndex++;
         }
         return chioce;
+    }
+    public int findIndexFromRank(int value, int[] rank){
+        int index=0;
+        for (int e : rank) {
+            if(value == e) {
+                break;
+            }
+            index++;
+        }
+        return index;
     }
 //    public Map stableW() {
 //        int manIndex  = 0;
