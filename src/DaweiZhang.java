@@ -84,14 +84,14 @@ public class DaweiZhang {
             if(lineNo < size)
             {
                 for (int index = 0; index < size; index ++) {
-                    men.get(lineNo).rank[index] = Integer.parseInt(components[index])-1;
+                    men.get(lineNo).rank[Integer.parseInt(components[index])-1] = index ;
                     women1.get(lineNo).rank[index] = Integer.parseInt(components[index])-1;
                 }
             }
             else
             {
                 for (int index = 0; index < size; index ++) {
-                    women.get(lineNo - size).rank[index] = Integer.parseInt(components[index])-1;
+                    women.get(lineNo - size).rank[Integer.parseInt(components[index])-1] = index;
                     men1.get(lineNo - size).rank[index] = Integer.parseInt(components[index])-1;
                 }
             }
@@ -154,39 +154,7 @@ public class DaweiZhang {
             count++;
         }
          */
-        // test the input.txt
-//        for (int e:men.get(0).rank) {
-//            System.out.print(e+1);
-//        }
-//        System.out.println();
-//        for (int e:men.get(1).rank) {
-//            System.out.print(e+1);
-//        }
-//        System.out.println();
-//        for (int e:men.get(2).rank) {
-//            System.out.print(e+1);
-//        }
-//        System.out.println();
-//        for (int e:men.get(3).rank) {
-//            System.out.print(e+1);
-//        }
-//        System.out.println();
-//        for (int e:women.get(0).rank) {
-//            System.out.print(e+1);
-//        }
-//        System.out.println();
-//        for (int e:women.get(1).rank) {
-//            System.out.print(e+1);
-//        }
-//        System.out.println();
-//        for (int e:women.get(2).rank) {
-//            System.out.print(e+1);
-//        }
-//        System.out.println();
-//        for (int e:women.get(3).rank) {
-//            System.out.print(e+1);
-//        }
-//        System.out.println();
+
 
     }
 
@@ -207,20 +175,15 @@ public class DaweiZhang {
                         women.get(e).free = false;
                         men.get(manIndex).free = false;
                         break;
-                    } else { //if (women.get(e).rank[manIndex] < women.get(e).rank[men.indexOf(chioce.get(women.get(e)))]) {
-                        for (int j = 0; j < women.get(e).size; j++) {
-                            if (women.get(e).rank[j]==e) {
+                    } else if (women.get(e).rank[manIndex] < women.get(e).rank[men.indexOf(chioce.get(women.get(e)))]) {
                                 women.get(e).reject[men.indexOf(chioce.get(women.get(e)))] = true;
                                 men.get(men.indexOf(chioce.get(women.get(e)))).free = true;
                                 chioce.remove(women.get(e));
                                 chioce.put(women.get(e), men.get(manIndex));
                                 men.get(manIndex).free = false;
                                 break;
-                            } else if(women.get(e).rank[j]== {// 这个没弄完，第二个case的比较
-                                women.get(e).reject[manIndex] = true;
-                            }
-                        }
-                    }
+                    } else
+                        women.get(e).reject[manIndex] = true;
                 }
             }
             if(chioce.size() == men.size())
@@ -270,6 +233,39 @@ public class DaweiZhang {
 //        return chioce;
 //    }
     public void p(){
+        // test the input.txt
+        for (int e:men.get(0).rank) {
+            System.out.print(e+1);
+        }
+        System.out.println();
+        for (int e:men.get(1).rank) {
+            System.out.print(e+1);
+        }
+        System.out.println();
+        for (int e:men.get(2).rank) {
+            System.out.print(e+1);
+        }
+        System.out.println();
+        for (int e:men.get(3).rank) {
+            System.out.print(e+1);
+        }
+        System.out.println();
+        for (int e:women.get(0).rank) {
+            System.out.print(e+1);
+        }
+        System.out.println();
+        for (int e:women.get(1).rank) {
+            System.out.print(e+1);
+        }
+        System.out.println();
+        for (int e:women.get(2).rank) {
+            System.out.print(e+1);
+        }
+        System.out.println();
+        for (int e:women.get(3).rank) {
+            System.out.print(e+1);
+        }
+        System.out.println();
 //        reject
 //        for (boolean e:women.get(0).reject) {
 //            System.out.print(e+",");
@@ -306,9 +302,9 @@ public class DaweiZhang {
         for (Map.Entry<Woman,Man> entry : oneStable.entrySet())
             System.out.println("Man = " + entry.getValue().index +
                     ", Woman = " + entry.getKey().index);
-        for (Map.Entry<Woman,Man> entry : secStable.entrySet())
-            System.out.println("Man = " + entry.getKey().index +
-                    ", Woman = " + entry.getValue().index);
+//        for (Map.Entry<Woman,Man> entry : secStable.entrySet())
+//            System.out.println("Man = " + entry.getKey().index +
+//                    ", Woman = " + entry.getValue().index);
     }
 }
 
