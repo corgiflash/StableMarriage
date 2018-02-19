@@ -62,6 +62,7 @@ public class DaweiZhang {
     int size;
     static int answer;
     ArrayList<int[]> combineResult = new ArrayList<int[]>();
+    ArrayList<int[]> stableResult = new ArrayList<int[]>();
     public DaweiZhang(String fileName) {
         try {
             readfile(fileName);
@@ -72,12 +73,14 @@ public class DaweiZhang {
         secStable = stableM();
         possibleManRank=possibleManRanks(oneStable,secStable);
         combine(possibleManRank,new int[possibleManRank.size()] ,0);
+        stableResult = stable(combineResult);
         p();
+        answer =stableResult.size();
     }
 
     public static void main(String args[]) {
         DaweiZhang dz = new DaweiZhang("src/input1.txt");//change when you using JGRASP input1.txt
-        System.out.println("There are "+answer+ " of difference stable matches.  ");
+        System.out.println("There are "+answer+ " difference stable matches.  ");
         //Using src/input.txt for here.
     }
 
@@ -98,14 +101,11 @@ public class DaweiZhang {
                 women1.add(new Person(size, i % size ));
             }
         }
-        /**********************************************
-         /**men propose*********************************
-         */
         inFile.nextLine();
         while (inFile.hasNextLine()) {
             String line = inFile.nextLine();
             String[] components = line.split(" ");
-            if(lineNo < size)
+            if(lineNo < size) // men & women is with women purposing(men's worst case) and men1&women1 with man purposing(men's best case)
             {
                 for (int index = 0; index < size; index ++) {
                     men.get(lineNo).rank[index]  = Integer.parseInt(components[index])-1;
@@ -121,22 +121,6 @@ public class DaweiZhang {
             }
             lineNo++;
         }
-        /*************
-         * old version file reading
-         *//*
-        while (inFile.hasNext()) {
-            // initial the rank of men and women in arrays
-            if (count < size * size) {
-                //System.out.println(count +") men.get("+ count / size +") rank["+(inFile.nextInt())+"] = "+ (count%size+1)  );
-                men.get(count / size).rank[count % size] = (inFile.nextInt()-1);
-            } else {
-                System.out.println("women.get("+ ((count - size * size) / size) +") rank["+(inFile.nextInt()-1)+"] = "+ (count%size+1) );
-                //women.get((count - size * size) / size).rank[count % size] = inFile.nextInt()-1;
-            }
-            count++;
-        }
-
-        ************************************************/
 
 
     }
@@ -309,27 +293,22 @@ public class DaweiZhang {
             }
             System.out.println();
         }
+        /*
         for (int[] e: combineResult) {
             for(int e1:e){
-                System.out.print((e1)+" ");
+                System.out.print((e1+1)+" ");
+            }
+            System.out.println();
+        }*/
+        for (int[] e: stableResult) {
+            for(int e1:e){
+                System.out.print((e1+1)+" ");
             }
             System.out.println();
         }
     }
-    public ArrayList<int[]> stable(ArrayList<int[]> combineResult){
-        ArrayList<int[]> result = new ArrayList<>();
-        for (int i=0;i<combineResult.size();i++) {
-            for(int j =0 ;j < possibleManRank.get(i).length;j++){
-                if(women.get(possibleManRank.get(i)[j]).rank[findIndexFromRank(i,women.get(possibleManRank.get(i)[j]).rank)]>)
-                break;
 
-            }
-        }
-
-
-
-        return result;
-    }
+    // using the best case and worst case get the range of men's rank
     private ArrayList<int[]> possibleManRanks(Map<Person, Person> matches1,Map<Person, Person> matches2){
         ArrayList<int[]> result= new ArrayList<int[]>();
         int[][] ListOfrange = new int[matches1.size()][2];
@@ -345,6 +324,7 @@ public class DaweiZhang {
         }
         return result;
     }
+    // get the permutation of the ArrayList<int[]>
     private void combine(ArrayList<int[]> input, int[] current, int k) {
         ArrayList<int[]> result = new ArrayList<int[]>();
         int[] count = new int[100];
@@ -381,8 +361,31 @@ public class DaweiZhang {
         }
 
     }
-    private static void chooseFromCombine(){
+    // check the which combination is not stable
 
+    public ArrayList<int[]> stable(ArrayList<int[]> combineResult) {
+        for (int i = 0; i < combineResult.size(); i++) {
+            boolean womenPreferOther = false;
+            for (int j = 0; j < combineResult.get(i).length; j++) {
+                if (possibleManRank.get(i).length == 1)// if there is only one possible choice for this man then don't have to check.
+                    break;
+                else {
+                    int womenCurr, womenCompare;
+                    womenCurr = findIndexFromRank(j, women.get(combineResult.get(i)[j]).rank);
+                    for (int menRank = 0; menRank < possibleManRank.get(i).length; menRank++) {// check all current man's rank and review the better choice then the current
+                        //if (possibleManRank.get(i)[menRank] == combineResult.get(i)[j])// if already went to the current choice
+                         //   break;
+                        womenCompare = findIndexFromRank(j, women.get(possibleManRank.get(i)[menRank]).rank);
+                        if (womenCompare < womenCurr) {
+                            combineResult.remove(i);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return combineResult;
     }
+
 }
 
